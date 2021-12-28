@@ -8,15 +8,34 @@ for i in range(N):
 
 isNegative = 0
 
-g = len(list)
+from itertools import takewhile
 
-save = []
+#print(sum(1 for _ in takewhile(lambda x: x< 5,list)))
 
-for i in range(g):
+check = []
+newCheck = []
+
+for i in range(len(list)):
     isNegative += list[i]
-    save.append(isNegative)
+    check = []
+    newCheck = []
     if isNegative < 0:
-        remove += 1
         isNegative -= list[i]
+        loop = len(list) - i
+        for y in range(loop):
+            check.append(list[i+y])
+        l = sum(1 for _ in takewhile(lambda x: x< 0,check))
+        for r in range(l-1):
+            newCheck.append(check[r])
+        
+        newCheck.sort(reverse=True)
+        over = 0
+        for j in range(len(newCheck)):
+            over += newCheck[j]
+            if isNegative - over < 0:
+                remove += 1
+            elif isNegative - over > 0:
+                remove += 1
+                
 
 print(remove)
