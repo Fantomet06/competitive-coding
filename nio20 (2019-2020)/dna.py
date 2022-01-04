@@ -6,10 +6,13 @@ def main():
     a = 1
 
     l1 = list(word1)
+    print(l1)
     #l2 = list(word2)
     for i in range(N):
-        check = [l1[x+1] for x in range(i)] 
+        check = [l1[x] for x in range(i)] 
+        print(check)
         check2 = ''.join(str(item) for item in check)
+        print(check2)
         if check2 not in word2:
             print(check2)
             a += 1
