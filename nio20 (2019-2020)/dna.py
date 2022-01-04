@@ -3,25 +3,20 @@ def main():
 
     word1 = str(input())
     word2 = str(input())
+    a = 1
 
     l1 = list(word1)
     #l2 = list(word2)
-
     for i in range(N):
-        try:
-            check = str(l1[i]+l1[i+1]+l1[i+2])
-            if check not in word2:
-                print(check)
-                break
+        check = [l1[x+1] for x in range(i)] 
+        check2 = ''.join(str(item) for item in check)
+        if check2 not in word2:
+            print(check2)
+            a += 1
+            break
 
-            for x in range(N):
-                check = str(l1[x]+l1[x+1])
-                if check not in word2:
-                    print(check)
-                    break
-        except:
-            print("ingen")
-
+    if a == 1:
+        print("ingen")
 main()
 
 
