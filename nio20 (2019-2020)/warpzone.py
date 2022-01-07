@@ -1,45 +1,49 @@
-def BFS_SP(graph, start, goal):
-    explored = []
-     
-    # Queue for traversing the
-    # graph in the BFS
-    queue = [[start]]
-     
-    # If the desired node is
-    # reached
-    if start == goal:
-        print("Same Node")
-        return
-     
-    # Loop to traverse the graph
-    # with the help of the queue
-    while queue:
-        path = queue.pop(0)
-        node = path[-1]
-         
-        # Condition to check if the
-        # current node is not visited
-        if node not in explored:
-            neighbours = graph[node]
-             
-            # Loop to iterate over the
-            # neighbours of the node
-            for neighbour in neighbours:
-                new_path = list(path)
-                new_path.append(neighbour)
-                queue.append(new_path)
-                 
-                # Condition to check if the
-                # neighbour node is the goal
-                if neighbour == goal:
-                    return new_path
-            explored.append(node)
+def BFS(adj, src, dest, v, pred, dist):
+    queue = []
+  
+    visited = [False for i in range(v)]
+  
+    for i in range(v):
  
-    # Condition when the nodes
-    # are not connected
-    print("So sorry, but a connecting"\
-                "path doesn't exist :(")
-    return
+        dist[i] = 1000000
+        pred[i] = -1
+
+    visited[src] = True
+    dist[src] = 0
+    queue.append(src)
+    while (len(queue) != 0):
+        u = queue[0]
+        queue.pop(0)
+        for i in range(len(adj[u])):
+         
+            if (visited[adj[u][i]] == False):
+                visited[adj[u][i]] = True
+                dist[adj[u][i]] = dist[u] + 1
+                pred[adj[u][i]] = u
+                queue.append(adj[u][i])
+                if (adj[u][i] == dest):
+                    return True
+  
+    return False
+  
+def printShortestDistance(adj, s, dest, v):
+    pred=[0 for i in range(v)]
+    dist=[0 for i in range(v)]
+  
+    if (BFS(adj, s, dest, v, pred, dist) == False):
+        print("Given source and destination are not connected")
+
+    path = []
+    crawl = dest
+    crawl = dest
+    path.append(crawl)
+     
+    while (pred[crawl] != -1):
+        path.append(pred[crawl])
+        crawl = pred[crawl]
+
+    print(dist[dest]+1)
+
 
 adj_list = {}
 mylist = []
@@ -78,5 +82,6 @@ for i in range(N-1):
     add_edge(i+1,i+2)
 
 #print(adj_list)
-r = BFS_SP(adj_list, 1, N)
-print(len(r))
+#r = BFS_SP(adj_list, 1, N)
+printShortestDistance(adj_list, 1, N, N*3)
+#print(len(r))
