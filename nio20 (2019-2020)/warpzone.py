@@ -4,7 +4,6 @@ def BFS(adj, src, dest, v, pred, dist):
     visited = [False for i in range(v)]
   
     for i in range(v):
- 
         dist[i] = 1000000
         pred[i] = -1
 
@@ -23,7 +22,6 @@ def BFS(adj, src, dest, v, pred, dist):
                 queue.append(adj[u][i])
                 if (adj[u][i] == dest):
                     return True
-  
     return False
   
 def printShortestDistance(adj, s, dest, v):
