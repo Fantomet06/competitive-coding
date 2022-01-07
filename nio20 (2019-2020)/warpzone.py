@@ -1,50 +1,45 @@
-from queue import Queue
-
-def BFS(adj_list, start_node, target_node):
-    visited = set()
-    queue = Queue()
-
-    queue.put(start_node)
-    visited.add(start_node)
-
-    parent = dict()
-    parent[start_node] = None
-
-    path_found = False
-    while not queue.empty():
-        current_node = queue.get()
-        if current_node == target_node:
-            path_found = True
-            break
-
-        for next_node in adj_list[current_node]:
-            if next_node not in visited:
-                queue.put(next_node)
-                parent[next_node] = current_node
-                visited.add(next_node)
-
-    path = []
-    if path_found:
-        path.append(target_node)
-        while parent[target_node] is not None:
-            path.append(parent[target_node]) 
-            target_node = parent[target_node]
-        path.reverse()
-    return path
-
-def traversal(adj_list, start_node):
-    visited = set()
-    queue = Queue()
-    queue.put(start_node)
-    visited.add(start_node)
-
-    while not queue.empty():
-        current_node = queue.get()
-        print(current_node, end = " ")
-        for next_node in adj_list[current_node]:
-            if next_node not in visited:
-                queue.put(next_node)
-                visited.add(next_node)
+def BFS_SP(graph, start, goal):
+    explored = []
+     
+    # Queue for traversing the
+    # graph in the BFS
+    queue = [[start]]
+     
+    # If the desired node is
+    # reached
+    if start == goal:
+        print("Same Node")
+        return
+     
+    # Loop to traverse the graph
+    # with the help of the queue
+    while queue:
+        path = queue.pop(0)
+        node = path[-1]
+         
+        # Condition to check if the
+        # current node is not visited
+        if node not in explored:
+            neighbours = graph[node]
+             
+            # Loop to iterate over the
+            # neighbours of the node
+            for neighbour in neighbours:
+                new_path = list(path)
+                new_path.append(neighbour)
+                queue.append(new_path)
+                 
+                # Condition to check if the
+                # neighbour node is the goal
+                if neighbour == goal:
+                    return new_path
+            explored.append(node)
+ 
+    # Condition when the nodes
+    # are not connected
+    print("So sorry, but a connecting"\
+                "path doesn't exist :(")
+    return
 
 adj_list = {}
 mylist = []
@@ -80,7 +75,8 @@ for i in range(N-1):
     add_edge(i+1,a)
     add_edge(i+1,b)
     add_edge(i+1,c)
+    add_edge(i+1,i+2)
 
-print(adj_list)
-path = BFS(adj_list, 1, N)
-print(path)
+#print(adj_list)
+r = BFS_SP(adj_list, 1, N)
+print(len(r))
