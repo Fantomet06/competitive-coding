@@ -14,14 +14,17 @@ def main():
         while (len(queue) != 0):
             u = queue[0]
             queue.pop(0)
-            for i in range(len(adj[u])):
-                if (visited[adj[u][i]] == False):
-                    visited[adj[u][i]] = True
-                    dist[adj[u][i]] = dist[u] + 1
-                    pred[adj[u][i]] = u
-                    queue.append(adj[u][i])
-                    if (adj[u][i] == dest):
-                        return True
+            try:
+                for i in range(len(adj[u])):
+                    if (visited[adj[u][i]] == False):
+                        visited[adj[u][i]] = True
+                        dist[adj[u][i]] = dist[u] + 1
+                        pred[adj[u][i]] = u
+                        queue.append(adj[u][i])
+                        if (adj[u][i] == dest):
+                            return True
+            except:
+                pass
         return False
     
     def printShortestDistance(adj, s, dest, v):
@@ -115,10 +118,11 @@ def main():
             print(f"{v} is not present in the graph!")
         else:
             adj_list2.pop(v)
-            for i in len(adj_list2):
-                list1 = adj_list2[i]
-                if v in list1:
-                    list1.remove(v)
+            for i in adj_list2:
+                if v in adj_list2[i]:
+                    adj_list2[i].remove[v]
+
+            return adj_list2
     
     #print(adj_list)
     combination = list(combinations(clist, 2))
@@ -128,8 +132,9 @@ def main():
     for x in range(N):
         adj_list2 = adj_list
         adj_list2  = del_vertex(adj_list2, x)
-        clist2 = [y for y in clist if x not in y]
+        clist2 = [y for y in clist if x not in clist]
         combination2 = list(combinations(clist2, 2))
+        print(combination2)
 
         for i in range(len(combination2)):
             printShortestDistance(adj_list, combination2[i][0], combination2[i][1], N)
