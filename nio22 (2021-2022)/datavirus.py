@@ -1,86 +1,142 @@
-"""N, M = map(int, input().split())
+def main():
+    def BFS(adj, src, dest, v, pred, dist):
+        queue = []
+    
+        visited = [False for i in range(v)]
+    
+        for i in range(v):
+            dist[i] = 1000000
+            pred[i] = -1
 
-a = []
+        visited[src] = True
+        dist[src] = 0
+        queue.append(src)
+        while (len(queue) != 0):
+            u = queue[0]
+            queue.pop(0)
+            for i in range(len(adj[u])):
+                if (visited[adj[u][i]] == False):
+                    visited[adj[u][i]] = True
+                    dist[adj[u][i]] = dist[u] + 1
+                    pred[adj[u][i]] = u
+                    queue.append(adj[u][i])
+                    if (adj[u][i] == dest):
+                        return True
+        return False
+    
+    def printShortestDistance(adj, s, dest, v):
+        pred=[0 for i in range(v)]
+        dist=[0 for i in range(v)]
+    
+        
+        if (BFS(adj, s, dest, v, pred, dist) == False):
+            #print("Given source and destination are not connected")
+            return False
+        
 
-for i in range(N):
-    b, c = map(int, input().split())
-    a.append[b, c]"""
+        path = []
+        crawl = dest
+        path.append(crawl)
+        
+        while (pred[crawl] != -1):
+            path.append(pred[crawl])
+            crawl = pred[crawl]
 
-# Python 3 program to count all paths
-# from a source to a destination.
-
-# A directed graph using adjacency
-# list representation
+        #print(dist[dest]+1)
 
 
-class Graph:
+    adj_list = {}
+    mylist = []
+    
+    def add_edge(node, node1, node2):
+        if node not in mylist:
+            mylist.append(node)
+            
+        temp = []
+        if node1 not in adj_list:
+            temp.append(node2)
+            adj_list[node1] = temp
 
-    def __init__(self, V):
-        self.V = V
-        self.adj = [[] for i in range(V)]
+        elif node1 in adj_list:
+            temp.extend(adj_list[node1])
+            temp.append(node2)
+            adj_list[node1] = temp
 
-    def addEdge(self, u, v):
 
-        # Add v to u’s list.
-        self.adj[u].append(v)
+    N, M = map(int, input().split())
 
-    # Returns count of paths from 's' to 'd'
-    def countPaths(self, s, d):
 
-        # Mark all the vertices
-        # as not visited
-        visited = [False] * self.V
- 
-        # Call the recursive helper
-        # function to print all paths
-        pathCount = [0]
-        self.countPathsUtil(s, d, visited, pathCount)
-        return pathCount[0]
+    from itertools import combinations
+    clist = []
+    connections = 0
 
-    # A recursive function to print all paths
-    # from 'u' to 'd'. visited[] keeps track
-    # of vertices in current path. path[]
-    # stores actual vertices and path_index
-    # is current index in path[]
-    def countPathsUtil(self, u, d,
-                       visited, pathCount):
-        visited[u] = True
+    for i in range(M):
+        e = i
+        a, b = map(int, input().split())
+        add_edge(a,e,b)
+        if a not in clist:
+            clist.append(a)
+        
+        if b not in clist:
+            clist.append(b)
+        #add_edge(a,e,e+1)
+    """
+    def del_vertex(self, k, N):
+        vertices = N
+        self_graph =[None]*vertices
 
-        # If current vertex is same as
-        # destination, then increment count
-        if (u == d):
-            pathCount[0] += 1
+        for i in range(vertices):
+            temp = self_graph[i]
+            if i == k:
+                while temp:
+                    self_graph[i]= temp.next
+                    temp = self_graph[i]
+                      
+            # Delete the vertex 
+            # using linked list concept        
+            if temp:
+                if temp[vertices] == k:
+                    self_graph[i]= temp.next
+                    temp = None
+            while temp:
+                if temp.vertex == k:
+                    break
+                prev = temp
+                temp = temp.next
+  
+            if temp == None:
+                continue
+  
+            prev.next = temp.next
+            temp = None"""
 
-        # If current vertex is not destination
+    def del_vertex(adj_list2, v):
+        if v not in adj_list2:
+            print(f"{v} is not present in the graph!")
         else:
+            adj_list2.pop(v)
+            for i in len(adj_list2):
+                list1 = adj_list2[i]
+                if v in list1:
+                    list1.remove(v)
+    
+    #print(adj_list)
+    combination = list(combinations(clist, 2))
+    aconnections = []
+    #rint(combination)
 
-            # Recur for all the vertices
-            # adjacent to current vertex
-            i = 0
-            while i < len(self.adj[u]):
-                if (not visited[self.adj[u][i]]):
-                    self.countPathsUtil(self.adj[u][i], d,
-                                        visited, pathCount)
-                i += 1
+    for x in range(N):
+        adj_list2 = adj_list
+        adj_list2  = del_vertex(adj_list2, x)
+        clist2 = [y for y in clist if x not in y]
+        combination2 = list(combinations(clist2, 2))
 
-        visited[u] = False
+        for i in range(len(combination2)):
+            printShortestDistance(adj_list, combination2[i][0], combination2[i][1], N)
+            if printShortestDistance != False:
+                connections += 1
+        
+        aconnections.append(connections)
 
-
-# Driver Code
-if __name__ == '__main__':
-
-    # Create a graph given in the
-    # above diagram
-    g = Graph(4)
-    g.addEdge(0, 1)
-    g.addEdge(0, 2)
-    g.addEdge(0, 3)
-    g.addEdge(2, 0)
-    g.addEdge(2, 1)
-    g.addEdge(1, 3)
-
-    s = 2
-    d = 3
-    print(g.countPaths(s, d))
-
-# This code is contributed by PranchalK
+    print(aconnections)
+main()
