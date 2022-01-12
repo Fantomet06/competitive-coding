@@ -76,7 +76,8 @@ def main():
     for i in range(M):
         e = i
         a, b = map(int, input().split())
-        add_edge(a,e,b)
+        add_edge(a,a,b)
+        add_edge(b,b,a)
         if a not in clist:
             clist.append(a)
         
@@ -120,7 +121,8 @@ def main():
             adj_list2.pop(v)
             for i in adj_list2:
                 if v in adj_list2[i]:
-                    adj_list2[i].remove[v]
+                    adj_list2[i].remove(v)
+                    break
 
             return adj_list2
     
@@ -128,20 +130,27 @@ def main():
     combination = list(combinations(clist, 2))
     aconnections = []
     #rint(combination)
+    print(adj_list)
 
     for x in range(N):
         adj_list2 = adj_list
         adj_list2  = del_vertex(adj_list2, x)
-        clist2 = [y for y in clist if x not in clist]
+        clist2 = [y for y in clist]
+        clist2.remove(x)
+        print(adj_list2)
         combination2 = list(combinations(clist2, 2))
-        print(combination2)
+
+        connections = 0
 
         for i in range(len(combination2)):
-            printShortestDistance(adj_list, combination2[i][0], combination2[i][1], N)
-            if printShortestDistance != False:
+            pred=[0 for i in range(N)]
+            dist=[0 for i in range(N)]
+            bfs = BFS(adj_list2, combination2[i][0], combination2[i][1], N, pred, dist)
+            if bfs != False:
                 connections += 1
         
         aconnections.append(connections)
 
-    print(aconnections)
+    aconnections.sort(reverse=True)
+    print(aconnections[0])
 main()
