@@ -130,14 +130,14 @@ def main():
     combination = list(combinations(clist, 2))
     aconnections = []
     #rint(combination)
-    print(adj_list)
+    #print(adj_list)
 
     for x in range(N):
         adj_list2 = adj_list
         adj_list2  = del_vertex(adj_list2, x)
         clist2 = [y for y in clist]
         clist2.remove(x)
-        print(adj_list2)
+        #print(adj_list2)
         combination2 = list(combinations(clist2, 2))
 
         connections = 0
