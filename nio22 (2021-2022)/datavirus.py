@@ -1,3 +1,14 @@
+def del_vertex(k, v):
+        if v not in k:
+            print(f"{v} is not present in the graph!")
+        else:
+            k.pop(v)
+            for i in k:
+                if v in k[i]:
+                    k[i].remove(v)
+
+            return k
+
 def main():
     def BFS(adj, src, dest, v, pred, dist):
         queue = []
@@ -26,27 +37,6 @@ def main():
             except:
                 pass
         return False
-    
-    def printShortestDistance(adj, s, dest, v):
-        pred=[0 for i in range(v)]
-        dist=[0 for i in range(v)]
-    
-        
-        if (BFS(adj, s, dest, v, pred, dist) == False):
-            #print("Given source and destination are not connected")
-            return False
-        
-
-        path = []
-        crawl = dest
-        path.append(crawl)
-        
-        while (pred[crawl] != -1):
-            path.append(pred[crawl])
-            crawl = pred[crawl]
-
-        #print(dist[dest]+1)
-
 
     adj_list = {}
     mylist = []
@@ -68,13 +58,11 @@ def main():
 
     N, M = map(int, input().split())
 
-
     from itertools import combinations
     clist = []
     connections = 0
 
     for i in range(M):
-        e = i
         a, b = map(int, input().split())
         add_edge(a,a,b)
         add_edge(b,b,a)
@@ -83,61 +71,15 @@ def main():
         
         if b not in clist:
             clist.append(b)
-        #add_edge(a,e,e+1)
-    """
-    def del_vertex(self, k, N):
-        vertices = N
-        self_graph =[None]*vertices
-
-        for i in range(vertices):
-            temp = self_graph[i]
-            if i == k:
-                while temp:
-                    self_graph[i]= temp.next
-                    temp = self_graph[i]
-                      
-            # Delete the vertex 
-            # using linked list concept        
-            if temp:
-                if temp[vertices] == k:
-                    self_graph[i]= temp.next
-                    temp = None
-            while temp:
-                if temp.vertex == k:
-                    break
-                prev = temp
-                temp = temp.next
-  
-            if temp == None:
-                continue
-  
-            prev.next = temp.next
-            temp = None"""
-
-    def del_vertex(adj_list2, v):
-        if v not in adj_list2:
-            print(f"{v} is not present in the graph!")
-        else:
-            adj_list2.pop(v)
-            for i in adj_list2:
-                if v in adj_list2[i]:
-                    adj_list2[i].remove(v)
-                    break
-
-            return adj_list2
-    
-    #print(adj_list)
-    combination = list(combinations(clist, 2))
     aconnections = []
-    #rint(combination)
-    #print(adj_list)
 
     for x in range(N):
-        adj_list2 = adj_list
+        print(adj_list)
+        #adj_list2 = [y for y in adj_list]
         adj_list2  = del_vertex(adj_list2, x)
+        print(adj_list2)
         clist2 = [y for y in clist]
         clist2.remove(x)
-        #print(adj_list2)
         combination2 = list(combinations(clist2, 2))
 
         connections = 0
