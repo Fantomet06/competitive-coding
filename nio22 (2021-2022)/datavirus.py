@@ -59,6 +59,7 @@ def main():
     N, M = map(int, input().split())
 
     from itertools import combinations
+    import copy
     clist = []
     connections = 0
 
@@ -74,13 +75,14 @@ def main():
     aconnections = []
 
     for x in range(N):
-        print(adj_list)
-        #adj_list2 = [y for y in adj_list]
+        #print(adj_list)
+        adj_list2 = copy.deepcopy(adj_list)
         adj_list2  = del_vertex(adj_list2, x)
-        print(adj_list2)
+        #print(adj_list2)
         clist2 = [y for y in clist]
         clist2.remove(x)
         combination2 = list(combinations(clist2, 2))
+        #print(combination2)
 
         connections = 0
 
@@ -93,6 +95,6 @@ def main():
         
         aconnections.append(connections)
 
-    aconnections.sort(reverse=True)
+    aconnections.sort(reverse=False)
     print(aconnections[0])
 main()
