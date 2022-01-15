@@ -123,7 +123,7 @@ def main():
         #print(adj_list)
         adj_list2 = copy.deepcopy(adj_list)
         adj_list2  = del_vertex(adj_list2, x)
-        #print(adj_list2)
+        print(adj_list2)
         clist2 = [y for y in clist]
         clist2.remove(x)
         combination2 = list(combinations(clist2, 2))
